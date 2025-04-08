@@ -1,28 +1,3 @@
-"use strict";
-//src/components/FolderSelector.tsx
-var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
-    if (k2 === undefined) k2 = k;
-    var desc = Object.getOwnPropertyDescriptor(m, k);
-    if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
-      desc = { enumerable: true, get: function() { return m[k]; } };
-    }
-    Object.defineProperty(o, k2, desc);
-}) : (function(o, m, k, k2) {
-    if (k2 === undefined) k2 = k;
-    o[k2] = m[k];
-}));
-var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
-    Object.defineProperty(o, "default", { enumerable: true, value: v });
-}) : function(o, v) {
-    o["default"] = v;
-});
-var __importStar = (this && this.__importStar) || function (mod) {
-    if (mod && mod.__esModule) return mod;
-    var result = {};
-    if (mod != null) for (var k in mod) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
-    __setModuleDefault(result, mod);
-    return result;
-};
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
     function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
     return new (P || (P = Promise))(function (resolve, reject) {
@@ -39,19 +14,20 @@ var __asyncValues = (this && this.__asyncValues) || function (o) {
     function verb(n) { i[n] = o[n] && function (v) { return new Promise(function (resolve, reject) { v = o[n](v), settle(resolve, reject, v.done, v.value); }); }; }
     function settle(resolve, reject, d, v) { Promise.resolve(v).then(function(v) { resolve({ value: v, done: d }); }, reject); }
 };
-Object.defineProperty(exports, "__esModule", { value: true });
-const react_1 = __importStar(require("react"));
+import { jsxs as _jsxs, jsx as _jsx } from "react/jsx-runtime";
+//src/components/FolderSelector.tsx
+import { useState } from 'react';
 const FolderSelector = ({ onAssistantCreated, onCancel }) => {
     // State variables
-    const [extensionsCount, setExtensionsCount] = (0, react_1.useState)({});
-    const [selectedExtensions, setSelectedExtensions] = (0, react_1.useState)([]);
-    const [folderData, setFolderData] = (0, react_1.useState)([]);
-    const [selectedFiles, setSelectedFiles] = (0, react_1.useState)(new Map());
-    const [showExtensionPopup, setShowExtensionPopup] = (0, react_1.useState)(false);
-    const [showFolderTree, setShowFolderTree] = (0, react_1.useState)(false);
-    const [newAssistantName, setNewAssistantName] = (0, react_1.useState)('');
+    const [extensionsCount, setExtensionsCount] = useState({});
+    const [selectedExtensions, setSelectedExtensions] = useState([]);
+    const [folderData, setFolderData] = useState([]);
+    const [selectedFiles, setSelectedFiles] = useState(new Map());
+    const [showExtensionPopup, setShowExtensionPopup] = useState(false);
+    const [showFolderTree, setShowFolderTree] = useState(false);
+    const [newAssistantName, setNewAssistantName] = useState('');
     // New state for expanded folders
-    const [expandedFolders, setExpandedFolders] = (0, react_1.useState)(new Set());
+    const [expandedFolders, setExpandedFolders] = useState(new Set());
     // Function to handle folder selection
     const handleFolderSelection = () => __awaiter(void 0, void 0, void 0, function* () {
         try {
@@ -218,42 +194,35 @@ const FolderSelector = ({ onAssistantCreated, onCancel }) => {
     const TreeNode = ({ item }) => {
         const isExpanded = expandedFolders.has(item.path);
         if (item.isFile) {
-            return (react_1.default.createElement("li", { style: { cursor: 'pointer', marginLeft: '20px' } },
-                react_1.default.createElement("span", { className: selectedFiles.has(item.path) ? 'selected' : '', style: {
+            return (_jsx("li", { style: { cursor: 'pointer', marginLeft: '20px' }, children: _jsxs("span", { className: selectedFiles.has(item.path) ? 'selected' : '', style: {
                         backgroundColor: selectedFiles.has(item.path) ? '#d3d3d3' : 'transparent',
                         display: 'inline-block',
                         padding: '2px 5px',
                     }, onClick: (e) => {
                         e.stopPropagation(); // Prevent event from bubbling up
                         toggleFileSelection(item.path, item.handle);
-                    } },
-                    "\uD83D\uDCC4 ",
-                    item.name)));
+                    }, children: ["\uD83D\uDCC4 ", item.name] }) }));
         }
         else {
-            return (react_1.default.createElement("li", { style: { cursor: 'pointer', marginLeft: '0' } },
-                react_1.default.createElement("div", { title: "Click to expand/collapse. Ctrl+Click to deselect all files. Alt+Click to select all files.", onClick: (e) => {
-                        e.stopPropagation(); // Prevent event from bubbling up
-                        if (e.ctrlKey) {
-                            // Deselect all files under this folder
-                            deselectFilesUnderFolder(item);
-                        }
-                        else if (e.altKey) {
-                            // Select all files under this folder
-                            selectFilesUnderFolder(item);
-                        }
-                        else {
-                            toggleFolderExpansion(item.path);
-                        }
-                    }, style: { fontWeight: 'bold', display: 'flex', alignItems: 'center' } },
-                    react_1.default.createElement("span", { style: { marginRight: '5px' } }, isExpanded ? '📂' : '📁'),
-                    item.name),
-                isExpanded && (react_1.default.createElement("ul", { style: { listStyleType: 'none', paddingLeft: '20px' } }, item.contents.map((childItem) => (react_1.default.createElement(TreeNode, { key: childItem.path, item: childItem })))))));
+            return (_jsxs("li", { style: { cursor: 'pointer', marginLeft: '0' }, children: [_jsxs("div", { title: "Click to expand/collapse. Ctrl+Click to deselect all files. Alt+Click to select all files.", onClick: (e) => {
+                            e.stopPropagation(); // Prevent event from bubbling up
+                            if (e.ctrlKey) {
+                                // Deselect all files under this folder
+                                deselectFilesUnderFolder(item);
+                            }
+                            else if (e.altKey) {
+                                // Select all files under this folder
+                                selectFilesUnderFolder(item);
+                            }
+                            else {
+                                toggleFolderExpansion(item.path);
+                            }
+                        }, style: { fontWeight: 'bold', display: 'flex', alignItems: 'center' }, children: [_jsx("span", { style: { marginRight: '5px' }, children: isExpanded ? '📂' : '📁' }), item.name] }), isExpanded && (_jsx("ul", { style: { listStyleType: 'none', paddingLeft: '20px' }, children: item.contents.map((childItem) => (_jsx(TreeNode, { item: childItem }, childItem.path))) }))] }));
         }
     };
     // Create tree view
     const createTreeView = (data) => {
-        return (react_1.default.createElement("ul", { style: { listStyleType: 'none', paddingLeft: '20px' } }, data.map((item) => (react_1.default.createElement(TreeNode, { key: item.path, item: item })))));
+        return (_jsx("ul", { style: { listStyleType: 'none', paddingLeft: '20px' }, children: data.map((item) => (_jsx(TreeNode, { item: item }, item.path))) }));
     };
     // Load files and generate JSON
     const loadFilesAsJson = () => __awaiter(void 0, void 0, void 0, function* () {
@@ -289,39 +258,9 @@ const FolderSelector = ({ onAssistantCreated, onCancel }) => {
             alert('Error creating assistant');
         }
     });
-    return (react_1.default.createElement("div", null,
-        react_1.default.createElement("h2", null, "Enter New Assistant Name"),
-        react_1.default.createElement("input", { type: "text", placeholder: "Enter new assistant name", value: newAssistantName, onChange: (e) => setNewAssistantName(e.target.value), style: styles.input }),
-        react_1.default.createElement("div", { style: styles.buttonGroup },
-            react_1.default.createElement("button", { onClick: handleFolderSelection, style: styles.button }, "Choose Folder"),
-            react_1.default.createElement("button", { onClick: () => setShowExtensionPopup(true), disabled: Object.keys(extensionsCount).length === 0, style: Object.assign(Object.assign({}, styles.button), (Object.keys(extensionsCount).length === 0 ? styles.disabledButton : {})) }, "Select Extensions"),
-            react_1.default.createElement("button", { onClick: handleShowTreeView, disabled: selectedExtensions.length === 0, style: Object.assign(Object.assign({}, styles.button), (selectedExtensions.length === 0 ? styles.disabledButton : {})) }, "Select Files")),
-        showExtensionPopup && (react_1.default.createElement("div", { style: styles.popup },
-            react_1.default.createElement("div", { style: styles.popupContent },
-                react_1.default.createElement("h3", null, "Select File Extensions"),
-                react_1.default.createElement("div", { id: "extensionCheckboxes", style: { textAlign: 'left' } }, Object.keys(extensionsCount)
-                    .sort()
-                    .map((ext) => (react_1.default.createElement("div", { key: ext },
-                    react_1.default.createElement("input", { type: "checkbox", id: ext, value: ext }),
-                    react_1.default.createElement("label", { htmlFor: ext },
-                        ext,
-                        " (",
-                        extensionsCount[ext],
-                        ")"))))),
-                react_1.default.createElement("button", { onClick: handleSubmitExtensionSelection, style: styles.button }, "Submit"),
-                react_1.default.createElement("button", { onClick: () => setShowExtensionPopup(false), style: styles.cancelButton }, "Cancel")))),
-        showFolderTree && (react_1.default.createElement("div", { style: styles.popup },
-            react_1.default.createElement("div", { style: styles.popupContent },
-                react_1.default.createElement("h3", null, "Select Files"),
-                react_1.default.createElement("div", { style: styles.buttonGroup },
-                    react_1.default.createElement("button", { onClick: selectAllFiles, style: styles.button }, "Select All"),
-                    react_1.default.createElement("button", { onClick: deselectAllFiles, style: styles.button }, "Deselect All")),
-                react_1.default.createElement("div", null, createTreeView(removeEmptyFolders(folderData))),
-                react_1.default.createElement("div", { style: styles.buttonGroup },
-                    react_1.default.createElement("button", { onClick: handleCreateAssistant, style: styles.createButton }, "Create Assistant"),
-                    react_1.default.createElement("button", { onClick: () => setShowFolderTree(false), style: styles.cancelButton }, "Cancel"))))),
-        react_1.default.createElement("div", { style: styles.buttonGroup },
-            react_1.default.createElement("button", { onClick: onCancel, style: styles.cancelButton }, "Cancel"))));
+    return (_jsxs("div", { children: [_jsx("h2", { children: "Enter New Assistant Name" }), _jsx("input", { type: "text", placeholder: "Enter new assistant name", value: newAssistantName, onChange: (e) => setNewAssistantName(e.target.value), style: styles.input }), _jsxs("div", { style: styles.buttonGroup, children: [_jsx("button", { onClick: handleFolderSelection, style: styles.button, children: "Choose Folder" }), _jsx("button", { onClick: () => setShowExtensionPopup(true), disabled: Object.keys(extensionsCount).length === 0, style: Object.assign(Object.assign({}, styles.button), (Object.keys(extensionsCount).length === 0 ? styles.disabledButton : {})), children: "Select Extensions" }), _jsx("button", { onClick: handleShowTreeView, disabled: selectedExtensions.length === 0, style: Object.assign(Object.assign({}, styles.button), (selectedExtensions.length === 0 ? styles.disabledButton : {})), children: "Select Files" })] }), showExtensionPopup && (_jsx("div", { style: styles.popup, children: _jsxs("div", { style: styles.popupContent, children: [_jsx("h3", { children: "Select File Extensions" }), _jsx("div", { id: "extensionCheckboxes", style: { textAlign: 'left' }, children: Object.keys(extensionsCount)
+                                .sort()
+                                .map((ext) => (_jsxs("div", { children: [_jsx("input", { type: "checkbox", id: ext, value: ext }), _jsxs("label", { htmlFor: ext, children: [ext, " (", extensionsCount[ext], ")"] })] }, ext))) }), _jsx("button", { onClick: handleSubmitExtensionSelection, style: styles.button, children: "Submit" }), _jsx("button", { onClick: () => setShowExtensionPopup(false), style: styles.cancelButton, children: "Cancel" })] }) })), showFolderTree && (_jsx("div", { style: styles.popup, children: _jsxs("div", { style: styles.popupContent, children: [_jsx("h3", { children: "Select Files" }), _jsxs("div", { style: styles.buttonGroup, children: [_jsx("button", { onClick: selectAllFiles, style: styles.button, children: "Select All" }), _jsx("button", { onClick: deselectAllFiles, style: styles.button, children: "Deselect All" })] }), _jsx("div", { children: createTreeView(removeEmptyFolders(folderData)) }), _jsxs("div", { style: styles.buttonGroup, children: [_jsx("button", { onClick: handleCreateAssistant, style: styles.createButton, children: "Create Assistant" }), _jsx("button", { onClick: () => setShowFolderTree(false), style: styles.cancelButton, children: "Cancel" })] })] }) })), _jsx("div", { style: styles.buttonGroup, children: _jsx("button", { onClick: onCancel, style: styles.cancelButton, children: "Cancel" }) })] }));
 };
 // Styles for the component
 const styles = {
@@ -391,4 +330,4 @@ const styles = {
         overflowY: 'auto',
     },
 };
-exports.default = FolderSelector;
+export default FolderSelector;

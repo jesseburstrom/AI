@@ -1,7 +1,7 @@
 // src/services/AssistantManagerServices.ts
 
 import axios, { AxiosInstance, AxiosError } from 'axios';
-
+import { getErrorMessage } from '../utils/errors'; 
 // Define interfaces for response data
 
 // Fetch Assistants
@@ -78,8 +78,8 @@ export const fetchAssistants = async (): Promise<string[]> => {
         const response = await api.get<FetchAssistantsResponse>('/assistants');
         return response.data.names;
     } catch (err: unknown) {
-        if (axios.isAxiosError(err) && err.message) {
-            throw new Error('Failed to fetch assistants: ' + err.message);
+        if (axios.isAxiosError(err) && getErrorMessage(err)) {
+            throw new Error('Failed to fetch assistants: ' + getErrorMessage(err));
         }
         throw new Error('Failed to fetch assistants: Unknown error');
     }
@@ -91,8 +91,8 @@ export const setAssistantOnServer = async (assistantName: string): Promise<strin
         const response = await api.post<SetAssistantOnServerResponse>('/set-assistant-by-name', { name: assistantName });
         return response.data.message;
     } catch (err: unknown) {
-        if (axios.isAxiosError(err) && err.message) {
-            throw new Error('Failed to set assistant: ' + err.message);
+        if (axios.isAxiosError(err) && getErrorMessage(err)) {
+            throw new Error('Failed to set assistant: ' + getErrorMessage(err));
         }
         throw new Error('Failed to set assistant: Unknown error');
     }
@@ -104,8 +104,8 @@ export const deleteCurrentThread = async (threadID: string): Promise<string> => 
         const response = await api.delete<DeleteCurrentThreadResponse>('/delete-thread', { data: { threadID } });
         return response.data.message;
     } catch (err: unknown) {
-        if (axios.isAxiosError(err) && err.message) {
-            throw new Error('Failed to delete thread: ' + err.message);
+        if (axios.isAxiosError(err) && getErrorMessage(err)) {
+            throw new Error('Failed to delete thread: ' + getErrorMessage(err));
         }
         throw new Error('Failed to delete thread: Unknown error');
     }
@@ -117,8 +117,8 @@ export const createThread = async (): Promise<string> => {
         const response = await api.post<CreateThreadResponse>('/create-thread');
         return response.data.threadID;
     } catch (err: unknown) {
-        if (axios.isAxiosError(err) && err.message) {
-            throw new Error('Failed to create thread: ' + err.message);
+        if (axios.isAxiosError(err) && getErrorMessage(err)) {
+            throw new Error('Failed to create thread: ' + getErrorMessage(err));
         }
         throw new Error('Failed to create thread: Unknown error');
     }
@@ -133,8 +133,8 @@ export const createMessage = async (input: string): Promise<CreateMessageRespons
         });
         return response.data;
     } catch (err: unknown) {
-        if (axios.isAxiosError(err) && err.message) {
-            throw new Error('Failed to create message: ' + err.message);
+        if (axios.isAxiosError(err) && getErrorMessage(err)) {
+            throw new Error('Failed to create message: ' + getErrorMessage(err));
         }
         throw new Error('Failed to create message: Unknown error');
     }
@@ -148,8 +148,8 @@ export const createRun = async (fullSystemPrompt: string): Promise<string> => {
         });
         return response.data.threadID;
     } catch (err: unknown) {
-        if (axios.isAxiosError(err) && err.message) {
-            throw new Error('Failed to create run: ' + err.message);
+        if (axios.isAxiosError(err) && getErrorMessage(err)) {
+            throw new Error('Failed to create run: ' + getErrorMessage(err));
         }
         throw new Error('Failed to create run: Unknown error');
     }
@@ -161,8 +161,8 @@ export const retrieveRunStatus = async (): Promise<RunStatus> => {
         const response = await api.get<RunStatus>('/retrieve-run');
         return response.data;
     } catch (err: unknown) {
-        if (axios.isAxiosError(err) && err.message) {
-            throw new Error('Failed to retrieve run status: ' + err.message);
+        if (axios.isAxiosError(err) && getErrorMessage(err)) {
+            throw new Error('Failed to retrieve run status: ' + getErrorMessage(err));
         }
         throw new Error('Failed to retrieve run status: Unknown error');
     }
@@ -179,8 +179,8 @@ export const listAllMessages = async (): Promise<ListAllMessagesResponse> => {
         });
         return response.data;
     } catch (err: unknown) {
-        if (axios.isAxiosError(err) && err.message) {
-            throw new Error('Failed to list messages: ' + err.message);
+        if (axios.isAxiosError(err) && getErrorMessage(err)) {
+            throw new Error('Failed to list messages: ' + getErrorMessage(err));
         }
         throw new Error('Failed to list messages: Unknown error');
     }
@@ -195,8 +195,8 @@ export const createAssistant = async (name: string, jsonData: any): Promise<Crea
         });
         return response.data;
     } catch (err: unknown) {
-        if (axios.isAxiosError(err) && err.message) {
-            throw new Error('Failed to create assistant: ' + err.message);
+        if (axios.isAxiosError(err) && getErrorMessage(err)) {
+            throw new Error('Failed to create assistant: ' + getErrorMessage(err));
         }
         throw new Error('Failed to create assistant: Unknown error');
     }
@@ -208,8 +208,8 @@ export const deleteAssistant = async (): Promise<string> => {
         const response = await api.delete<DeleteAssistantResponse>('/delete-all-objects');
         return response.data.message;
     } catch (err: unknown) {
-        if (axios.isAxiosError(err) && err.message) {
-            throw new Error('Failed to delete assistant: ' + err.message);
+        if (axios.isAxiosError(err) && getErrorMessage(err)) {
+            throw new Error('Failed to delete assistant: ' + getErrorMessage(err));
         }
         throw new Error('Failed to delete assistant: Unknown error');
     }

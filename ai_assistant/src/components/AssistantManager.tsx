@@ -1,4 +1,6 @@
 import React, { useState, useEffect, FC } from 'react';
+import { getErrorMessage } from '../utils/errors';
+
 import {
     fetchAssistants,
     setAssistantOnServer,
@@ -65,7 +67,7 @@ const AssistantManager: FC = () => {
                 const assistantNames: string[] = await fetchAssistants();
                 setAssistants(assistantNames);
             } catch (err: any) { // Assuming err has a message property
-                setError(err.message || 'An unexpected error occurred.');
+                setError(getErrorMessage(err) || 'An unexpected error occurred.');
             }
         };
 
@@ -77,7 +79,7 @@ const AssistantManager: FC = () => {
             const assistantNames: string[] = await fetchAssistants();
             setAssistants(assistantNames);
         } catch (err: any) {
-            setError(err.message || 'Failed to fetch assistants.');
+            setError(getErrorMessage(err) || 'Failed to fetch assistants.');
         }
     };
 
@@ -126,7 +128,7 @@ const AssistantManager: FC = () => {
                 const threadID: string = await createThread();
                 setCurrentThreadID(threadID);
             } catch (err: any) {
-                setError(err.message || 'Failed to change assistant.');
+                setError(getErrorMessage(err) || 'Failed to change assistant.');
             }
         } else {
             setCurrentAssistant('');
@@ -149,7 +151,7 @@ const AssistantManager: FC = () => {
             await createRun(fullSystemPrompt);
             await checkRunStatus();
         } catch (err: any) {
-            setError(err.message || 'Failed to process input.');
+            setError(getErrorMessage(err) || 'Failed to process input.');
         }
     };
 
@@ -193,7 +195,7 @@ const AssistantManager: FC = () => {
                         }
                     } catch (err: any) {
                         clearInterval(interval);
-                        setError(err.message || 'Failed to retrieve run status.');
+                        setError(getErrorMessage(err) || 'Failed to retrieve run status.');
                         setIsLoading(false);
                     }
                 }, 1000);
@@ -202,7 +204,7 @@ const AssistantManager: FC = () => {
                 setIsLoading(false);
             }
         } catch (err: any) {
-            setError(err.message || 'Failed to check run status.');
+            setError(getErrorMessage(err) || 'Failed to check run status.');
             setIsLoading(false);
         }
     };
@@ -215,7 +217,7 @@ const AssistantManager: FC = () => {
             setCurrentAssistant('');
             await refreshAssistants();
         } catch (err: any) {
-            setError(err.message || 'Failed to delete assistant.');
+            setError(getErrorMessage(err) || 'Failed to delete assistant.');
         }
     };
 

@@ -1,33 +1,3 @@
-"use strict";
-// import React, { useState, useEffect, FC } from 'react';
-// import ReactMarkdown from 'react-markdown';
-// import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
-// import { solarizedlight } from 'react-syntax-highlighter/dist/esm/styles/prism';
-// import remarkGfm from 'remark-gfm';
-// import rehypeRaw from 'rehype-raw';
-var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
-    if (k2 === undefined) k2 = k;
-    var desc = Object.getOwnPropertyDescriptor(m, k);
-    if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
-      desc = { enumerable: true, get: function() { return m[k]; } };
-    }
-    Object.defineProperty(o, k2, desc);
-}) : (function(o, m, k, k2) {
-    if (k2 === undefined) k2 = k;
-    o[k2] = m[k];
-}));
-var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
-    Object.defineProperty(o, "default", { enumerable: true, value: v });
-}) : function(o, v) {
-    o["default"] = v;
-});
-var __importStar = (this && this.__importStar) || function (mod) {
-    if (mod && mod.__esModule) return mod;
-    var result = {};
-    if (mod != null) for (var k in mod) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
-    __setModuleDefault(result, mod);
-    return result;
-};
 var __rest = (this && this.__rest) || function (s, e) {
     var t = {};
     for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p) && e.indexOf(p) < 0)
@@ -39,10 +9,13 @@ var __rest = (this && this.__rest) || function (s, e) {
         }
     return t;
 };
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
-Object.defineProperty(exports, "__esModule", { value: true });
+import { jsx as _jsx, jsxs as _jsxs, Fragment as _Fragment } from "react/jsx-runtime";
+// import React, { useState, useEffect, FC } from 'react';
+// import ReactMarkdown from 'react-markdown';
+// import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
+// import { solarizedlight } from 'react-syntax-highlighter/dist/esm/styles/prism';
+// import remarkGfm from 'remark-gfm';
+// import rehypeRaw from 'rehype-raw';
 // // Define the shape of the conversation history items
 // interface ConversationItem {
 //     prompt: string;
@@ -301,18 +274,18 @@ Object.defineProperty(exports, "__esModule", { value: true });
 //     },
 // };
 // export default PromptResponse;
-const react_1 = __importStar(require("react"));
-const react_markdown_1 = __importDefault(require("react-markdown"));
-const react_syntax_highlighter_1 = require("react-syntax-highlighter");
-const prism_1 = require("react-syntax-highlighter/dist/esm/styles/prism");
-const remark_gfm_1 = __importDefault(require("remark-gfm"));
-const rehype_raw_1 = __importDefault(require("rehype-raw"));
+import { useState, useEffect, useRef } from 'react';
+import ReactMarkdown from 'react-markdown';
+import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
+import { solarizedlight } from 'react-syntax-highlighter/dist/esm/styles/prism';
+import remarkGfm from 'remark-gfm';
+import rehypeRaw from 'rehype-raw';
 const PromptResponse = ({ userInput, setUserInput, processInput, isLoading, responseOutput, }) => {
     // State to keep track of the conversation history
-    const [conversationHistory, setConversationHistory] = (0, react_1.useState)([]);
-    const [currentPrompt, setCurrentPrompt] = (0, react_1.useState)('');
+    const [conversationHistory, setConversationHistory] = useState([]);
+    const [currentPrompt, setCurrentPrompt] = useState('');
     // Reference to the response container
-    const responseContainerRef = (0, react_1.useRef)(null);
+    const responseContainerRef = useRef(null);
     // Function to handle copying the code block to the clipboard
     const handleCopyCode = (code) => {
         navigator.clipboard.writeText(code).then(() => {
@@ -331,7 +304,7 @@ const PromptResponse = ({ userInput, setUserInput, processInput, isLoading, resp
         processInput(); // Process the input (assumed to update responseOutput)
     };
     // Update the conversation history when a new response is received
-    (0, react_1.useEffect)(() => {
+    useEffect(() => {
         if (responseOutput && currentPrompt) {
             setConversationHistory((prevHistory) => [
                 { prompt: currentPrompt, response: responseOutput }, // Prepend new item
@@ -342,7 +315,7 @@ const PromptResponse = ({ userInput, setUserInput, processInput, isLoading, resp
         }
     }, [responseOutput]);
     // Scroll to the top when new items are prepended
-    (0, react_1.useEffect)(() => {
+    useEffect(() => {
         const container = responseContainerRef.current;
         if (container) {
             container.scrollTop = 0; // Scroll to the top to show new content
@@ -356,47 +329,28 @@ const PromptResponse = ({ userInput, setUserInput, processInput, isLoading, resp
         // Safely extract the code string from children
         const code = Array.isArray(children) ? children.join('') : String(children || '');
         if (!inline) {
-            return (react_1.default.createElement("div", Object.assign({ style: {
+            return (_jsxs("div", Object.assign({ style: {
                     position: 'relative',
                     marginTop: '20px',
-                } }, props),
-                react_1.default.createElement("div", { style: {
-                        fontStyle: 'italic',
-                        marginBottom: '5px',
-                        textAlign: 'left', // Align language text to the left
-                        fontSize: '12px', // Smaller font size for language label
-                        color: '#555', // Slightly gray color
-                    } }, language.toUpperCase()),
-                react_1.default.createElement(react_syntax_highlighter_1.Prism, { style: prism_1.solarizedlight, language: language, PreTag: "div" }, code.replace(/\n$/, '')),
-                react_1.default.createElement("button", { onClick: () => handleCopyCode(code), style: styles.copyButton, "aria-label": "Copy code to clipboard" }, "Copy")));
+                } }, props, { children: [_jsx("div", { style: {
+                            fontStyle: 'italic',
+                            marginBottom: '5px',
+                            textAlign: 'left', // Align language text to the left
+                            fontSize: '12px', // Smaller font size for language label
+                            color: '#555', // Slightly gray color
+                        }, children: language.toUpperCase() }), _jsx(SyntaxHighlighter, { style: solarizedlight, language: language, PreTag: "div", children: code.replace(/\n$/, '') }), _jsx("button", { onClick: () => handleCopyCode(code), style: styles.copyButton, "aria-label": "Copy code to clipboard", children: "Copy" })] })));
         }
         else {
-            return (react_1.default.createElement("code", Object.assign({ className: className }, props), code));
+            return (_jsx("code", Object.assign({ className: className }, props, { children: code })));
         }
     };
-    return (react_1.default.createElement("div", { style: styles.outerContainer },
-        react_1.default.createElement("div", { style: styles.container },
-            react_1.default.createElement("h2", { style: styles.heading }, "Prompt Input"),
-            react_1.default.createElement("textarea", { rows: 10, cols: 30, placeholder: "Enter your prompt here...", value: userInput, onChange: (e) => setUserInput(e.target.value), style: styles.textarea }),
-            react_1.default.createElement("button", { onClick: handleSubmit, style: styles.submitButton }, "Submit Prompt")),
-        react_1.default.createElement("div", { style: styles.responseContainer, ref: responseContainerRef }, isLoading ? (react_1.default.createElement("p", { style: styles.loadingText }, "Loading...")) : (react_1.default.createElement(react_1.default.Fragment, null,
-            react_1.default.createElement("h2", { style: styles.heading }, "Response Output"),
-            react_1.default.createElement("div", { style: styles.historyContainer }, conversationHistory.map((item, index) => {
-                // Calculate the prompt number
-                const promptNumber = conversationHistory.length - index;
-                return (react_1.default.createElement("div", { key: index, style: styles.conversationItem },
-                    react_1.default.createElement("div", { style: styles.prompt },
-                        react_1.default.createElement("strong", null,
-                            "Prompt ",
-                            promptNumber,
-                            ":"),
-                        " ",
-                        item.prompt),
-                    react_1.default.createElement("div", { style: styles.response },
-                        react_1.default.createElement(react_markdown_1.default, { children: item.response, remarkPlugins: [remark_gfm_1.default], rehypePlugins: [rehype_raw_1.default], components: {
-                                code: CodeBlock, // Use the correctly typed CodeBlock
-                            } }))));
-            })))))));
+    return (_jsxs("div", { style: styles.outerContainer, children: [_jsxs("div", { style: styles.container, children: [_jsx("h2", { style: styles.heading, children: "Prompt Input" }), _jsx("textarea", { rows: 10, cols: 30, placeholder: "Enter your prompt here...", value: userInput, onChange: (e) => setUserInput(e.target.value), style: styles.textarea }), _jsx("button", { onClick: handleSubmit, style: styles.submitButton, children: "Submit Prompt" })] }), _jsx("div", { style: styles.responseContainer, ref: responseContainerRef, children: isLoading ? (_jsx("p", { style: styles.loadingText, children: "Loading..." })) : (_jsxs(_Fragment, { children: [_jsx("h2", { style: styles.heading, children: "Response Output" }), _jsx("div", { style: styles.historyContainer, children: conversationHistory.map((item, index) => {
+                                // Calculate the prompt number
+                                const promptNumber = conversationHistory.length - index;
+                                return (_jsxs("div", { style: styles.conversationItem, children: [_jsxs("div", { style: styles.prompt, children: [_jsxs("strong", { children: ["Prompt ", promptNumber, ":"] }), " ", item.prompt] }), _jsx("div", { style: styles.response, children: _jsx(ReactMarkdown, { children: item.response, remarkPlugins: [remarkGfm], rehypePlugins: [rehypeRaw], components: {
+                                                    code: CodeBlock, // Use the correctly typed CodeBlock
+                                                } }) })] }, index));
+                            }) })] })) })] }));
 };
 // Styles for the component
 const styles = {
@@ -486,4 +440,4 @@ const styles = {
         fontStyle: 'italic',
     },
 };
-exports.default = PromptResponse;
+export default PromptResponse;
