@@ -26,7 +26,11 @@ import {
 } from './openai_api_calls';
 
 const app = express();
-app.use(cors());
+app.use(cors({
+  origin: '*', // This allows all origins
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization']
+}));
 const port = 8000;
 
 // Middleware to parse JSON request bodies
