@@ -509,7 +509,7 @@ app.get('/vector-store-files', (req: Request, res: Response) => {
     });
   });
 
-  const staticDir = path.join(__dirname, 'dist'); // Adjust if your dist is somewhere else
+  const staticDir = path.join(__dirname, 'ai/dist'); // Adjust if your dist is somewhere else
     
   // Serve static files
   app.use(express.static(staticDir));
