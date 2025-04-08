@@ -1,0 +1,14 @@
+{
+    "compilerOptions": {
+      "target": "ES6",               // Or a later version like ES2017
+      "module": "CommonJS",          // Use CommonJS module system
+      "rootDir": "./",               // Root directory of your source files
+      "outDir": "./dist",
+      "esModuleInterop": true,       // Enables interop between CommonJS and ES Modules
+      "forceConsistentCasingInFileNames": true,
+      "strict": true,                // Enable all strict type-checking options
+      "skipLibCheck": true
+    },
+    "include": ["*.ts", "**/*.ts"]
+  }
+  

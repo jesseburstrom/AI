@@ -1,0 +1,15 @@
+{
+  "compilerOptions": {
+    "target": "es2016",                // Specify ECMAScript target version
+    "lib": ["dom", "es2016"],          // Include necessary libraries
+    "module": "commonjs",              // Module code generation
+    "jsx": "react",                     // JSX code generation
+    "strict": true,                     // Enable all strict type-checking options
+    "esModuleInterop": true,            // Enable compatibility with CommonJS
+    "allowSyntheticDefaultImports": true,
+    "skipLibCheck": true,               // Skip type checking of declaration files
+    "forceConsistentCasingInFileNames": true // Disallow inconsistently-cased references to the same file
+  },
+  "include": ["src/**/*"],               // Specify the root files and the include patterns
+  "exclude": ["node_modules"]            // Exclude node_modules from compilation
+}
