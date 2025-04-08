@@ -509,14 +509,14 @@ app.get('/vector-store-files', (req: Request, res: Response) => {
     });
   });
 
-  const staticDir = path.join(__dirname, 'ai/dist') // Adjust if your dist is somewhere else
+  const staticDir = path.join(__dirname, 'ai/dist'); // Adjust if your dist is somewhere else
     
   // Serve static files
   app.use(express.static(staticDir));
   
   // Fallback route to serve index.html for any unmatched GET request
   app.get('*', (req: Request, res: Response) => {
-    res.sendFile(path.join(staticDir, 'ai/index.html'));
+    res.sendFile(path.join(staticDir, 'index.html'));
   });
   
 // Start the server
