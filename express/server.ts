@@ -213,7 +213,7 @@ app.post('/create-assistant', async (req: Request<{}, {}, CreateAssistantRequest
   }
 });
 
-app.get('/assistants', (req: Request, res: Response) => {
+app.get('/assistant/assistants', (req: Request, res: Response) => {
     const limit = req.query.limit ? parseInt(req.query.limit as string, 10) : undefined;
   
     const orderParam = req.query.order as string | undefined;
