@@ -32,6 +32,7 @@ app.use(cors({
   allowedHeaders: ['Content-Type', 'Authorization']
 }));
 const port = 8002;
+const base_route = '/assistant';
 
 // Middleware to parse JSON request bodies
 app.use(bodyParser.json({ limit: '50mb' }));
@@ -95,7 +96,7 @@ interface AssistantInteractRequestBody {
 }
 
 // POST endpoint to interact with the assistant
-app.post('/assistant-interact', async (req: Request<{}, {}, AssistantInteractRequestBody>, res: Response) => {
+app.post(base_route + '/assistant-interact', async (req: Request<{}, {}, AssistantInteractRequestBody>, res: Response) => {
   const { name, instructions } = req.body;
 
   if (!name || !instructions) {
@@ -197,7 +198,7 @@ app.post('/assistant-interact', async (req: Request<{}, {}, AssistantInteractReq
 });
 
 // POST endpoint to create a vector store and assistant
-app.post('/create-assistant', async (req: Request<{}, {}, CreateAssistantRequestBody>, res: Response) => {
+app.post(base_route + '/create-assistant', async (req: Request<{}, {}, CreateAssistantRequestBody>, res: Response) => {
   const { name, jsonData } = req.body;
 
   if (!name || !jsonData) {
@@ -213,7 +214,7 @@ app.post('/create-assistant', async (req: Request<{}, {}, CreateAssistantRequest
   }
 });
 
-app.get('/assistant/assistants', (req: Request, res: Response) => {
+app.get(base_route + '/assistants', (req: Request, res: Response) => {
     const limit = req.query.limit ? parseInt(req.query.limit as string, 10) : undefined;
   
     const orderParam = req.query.order as string | undefined;
@@ -243,7 +244,7 @@ app.get('/assistant/assistants', (req: Request, res: Response) => {
   });
   
 
-app.post('/set-assistant-by-name', (req: Request<{}, {}, SetAssistantByNameRequestBody>, res: Response) => {
+app.post(base_route + '/set-assistant-by-name', (req: Request<{}, {}, SetAssistantByNameRequestBody>, res: Response) => {
   const { name } = req.body;
 
   if (!name) {
@@ -266,7 +267,7 @@ app.post('/set-assistant-by-name', (req: Request<{}, {}, SetAssistantByNameReque
   });
 });
 
-app.post('/create-thread', (req: Request<{}, {}, CreateThreadRequestBody>, res: Response) => {
+app.post(base_route + '/create-thread', (req: Request<{}, {}, CreateThreadRequestBody>, res: Response) => {
   const { messages, toolResources, metadata } = req.body;
 
   createThread(messages, toolResources, metadata, (err: Error | null, thread: any) => {
@@ -279,7 +280,7 @@ app.post('/create-thread', (req: Request<{}, {}, CreateThreadRequestBody>, res: 
   });
 });
 
-app.post('/create-message', (req: Request<{}, {}, CreateMessageRequestBody>, res: Response) => {
+app.post(base_route + '/create-message', (req: Request<{}, {}, CreateMessageRequestBody>, res: Response) => {
   const { role, content, attachments, metadata } = req.body;
 
   if (!role || !content) {
@@ -296,7 +297,7 @@ app.post('/create-message', (req: Request<{}, {}, CreateMessageRequestBody>, res
   });
 });
 
-app.post('/create-run', (req: Request<{}, {}, CreateRunRequestBody>, res: Response) => {
+app.post(base_route + '/create-run', (req: Request<{}, {}, CreateRunRequestBody>, res: Response) => {
   const {
     instructions,
     additionalInstructions,
@@ -326,7 +327,7 @@ app.post('/create-run', (req: Request<{}, {}, CreateRunRequestBody>, res: Respon
   );
 });
 
-app.get('/retrieve-run', (req: Request, res: Response) => {
+app.get(base_route + '/retrieve-run', (req: Request, res: Response) => {
   retrieveRun((err: Error | null, run: any) => {
     if (err) {
       console.error('Error retrieving run:', err);
@@ -337,7 +338,7 @@ app.get('/retrieve-run', (req: Request, res: Response) => {
   });
 });
 
-app.get('/assistant/list-messages', (req: Request, res: Response) => {
+app.get(base_route + '/list-messages', (req: Request, res: Response) => {
     const limit = req.query.limit ? parseInt(req.query.limit as string, 10) : undefined;
   
     const orderParam = req.query.order as string | undefined;
@@ -366,7 +367,7 @@ app.get('/assistant/list-messages', (req: Request, res: Response) => {
   });
   
 
-app.delete('/delete-thread', (req: Request<{}, {}, DeleteThreadRequestBody>, res: Response) => {
+app.delete(base_route + '/delete-thread', (req: Request<{}, {}, DeleteThreadRequestBody>, res: Response) => {
   const { currentThreadID } = req.body;
   if (!currentThreadID) {
     return res.status(400).json({ error: 'No thread ID provided' });
@@ -384,7 +385,7 @@ app.delete('/delete-thread', (req: Request<{}, {}, DeleteThreadRequestBody>, res
 });
 
 // DELETE endpoint to delete all objects (assistant, vector store, thread, and file)
-app.delete('/delete-all-objects', async (req: Request, res: Response) => {
+app.delete(base_route + '/delete-all-objects', async (req: Request, res: Response) => {
   try {
     await new Promise((resolve, reject) => {
       deleteAllObjects((err: Error | null, result: any) => {
@@ -401,7 +402,7 @@ app.delete('/delete-all-objects', async (req: Request, res: Response) => {
 });
 
 //////////////////////////////////////// Not currently used below
-app.get('/list-files', (req: Request, res: Response) => {
+app.get(base_route + '/list-files', (req: Request, res: Response) => {
   const purpose = req.query.purpose as string | undefined;
 
   listFiles(purpose, (err: Error | null, files: any) => {
@@ -414,7 +415,7 @@ app.get('/list-files', (req: Request, res: Response) => {
   });
 });
 
-app.post('/upload-json-and-create-vector-store', (req: Request<{}, {}, UploadJsonRequestBody>, res: Response) => {
+app.post(base_route + '/upload-json-and-create-vector-store', (req: Request<{}, {}, UploadJsonRequestBody>, res: Response) => {
   const { jsonData, vectorStoreName } = req.body;
 
   if (!jsonData || !vectorStoreName) {
@@ -431,7 +432,7 @@ app.post('/upload-json-and-create-vector-store', (req: Request<{}, {}, UploadJso
   });
 });
 
-app.post('/add-file-to-vector-store', (req: Request<{}, {}, FileIdRequestBody>, res: Response) => {
+app.post(base_route + '/add-file-to-vector-store', (req: Request<{}, {}, FileIdRequestBody>, res: Response) => {
   const { fileId } = req.body;
 
   if (!fileId) {
@@ -448,7 +449,7 @@ app.post('/add-file-to-vector-store', (req: Request<{}, {}, FileIdRequestBody>, 
   });
 });
 
-app.delete('/remove-file-from-vector-store', (req: Request<{}, {}, FileIdRequestBody>, res: Response) => {
+app.delete(base_route + '/remove-file-from-vector-store', (req: Request<{}, {}, FileIdRequestBody>, res: Response) => {
   const { fileId } = req.body;
 
   if (!fileId) {
@@ -465,7 +466,7 @@ app.delete('/remove-file-from-vector-store', (req: Request<{}, {}, FileIdRequest
   });
 });
 
-app.delete('/delete-vector-store', (req: Request, res: Response) => {
+app.delete(base_route + '/delete-vector-store', (req: Request, res: Response) => {
   deleteVectorStore((err: Error | null, result: any) => {
     if (err) {
       console.error('Error deleting vector store:', err);
@@ -476,7 +477,7 @@ app.delete('/delete-vector-store', (req: Request, res: Response) => {
   });
 });
 
-app.delete('/delete-assistant', (req: Request, res: Response) => {
+app.delete(base_route + '/delete-assistant', (req: Request, res: Response) => {
   deleteAssistant((err: Error | null, result: any) => {
     if (err) {
       console.error('Error deleting assistant:', err);
@@ -488,7 +489,7 @@ app.delete('/delete-assistant', (req: Request, res: Response) => {
 });
 
 
-app.get('/vector-store-files', (req: Request, res: Response) => {
+app.get(base_route + '/vector-store-files', (req: Request, res: Response) => {
     const limit = req.query.limit ? parseInt(req.query.limit as string, 10) : 20;
   
     const orderParam = req.query.order as string | undefined;
