@@ -3,6 +3,8 @@ import * as fs from 'fs';
 import * as path from 'path';
 import FormData, { SubmitOptions } from 'form-data';
 import { IncomingMessage } from 'http';
+import * as dotenv from 'dotenv';
+dotenv.config({ path: path.resolve(__dirname, '.env.local') });
 
 const apiKey: string = process.env.OPENAI_API_KEY as string;
 
