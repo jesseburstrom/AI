@@ -2,6 +2,8 @@
 import express, { Request, Response } from 'express';
 import cors from 'cors';
 import bodyParser from 'body-parser';
+import * as path from 'path';
+
 
 import {
   createVectorStoreAndAssistant,
@@ -25,7 +27,7 @@ import {
 
 const app = express();
 app.use(cors());
-const port = 3000;
+const port = 8000;
 
 // Middleware to parse JSON request bodies
 app.use(bodyParser.json({ limit: '50mb' }));
@@ -501,6 +503,16 @@ app.get('/vector-store-files', (req: Request, res: Response) => {
   
       res.status(200).json(files); // Return the files to the client
     });
+  });
+
+  const staticDir = path.join(__dirname, 'dist') // Adjust if your dist is somewhere else
+    
+  // Serve static files
+  app.use(express.static(staticDir));
+  
+  // Fallback route to serve index.html for any unmatched GET request
+  app.get('*', (req: Request, res: Response) => {
+    res.sendFile(path.join(staticDir, 'index.html'));
   });
   
 // Start the server
