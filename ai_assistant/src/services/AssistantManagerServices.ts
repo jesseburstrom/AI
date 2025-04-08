@@ -68,7 +68,7 @@ interface DeleteAssistantResponse {
 
 // Optionally, set a base URL if all requests share the same base
 const api: AxiosInstance = axios.create({
-    baseURL: 'http://localhost:3000',
+    baseURL: 'http://localhost:8000',
     // You can add headers or other configurations here
 });
 
