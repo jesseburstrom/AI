@@ -228,7 +228,7 @@ app.get('/assistants', (req: Request, res: Response) => {
           console.error('Error listing assistants:', err);
           return res.status(500).json({
             error: 'Failed to list assistants',
-            details: getErrorMessage(err),
+            details: err.message,
           });
         }
   
@@ -249,7 +249,7 @@ app.post('/set-assistant-by-name', (req: Request<{}, {}, SetAssistantByNameReque
   listAssistants(100, 'desc', null, null, (err: Error | null, assistants: { data: Assistant[] }) => {
     if (err) {
       console.error('Error listing assistants:', err);
-      return res.status(500).json({ error: 'Failed to list assistants', details: getErrorMessage(err) });
+      return res.status(500).json({ error: 'Failed to list assistants', details: err.message });
     }
 
     const assistant = assistants.data.find((assistant) => assistant.name === name);
@@ -268,7 +268,7 @@ app.post('/create-thread', (req: Request<{}, {}, CreateThreadRequestBody>, res: 
   createThread(messages, toolResources, metadata, (err: Error | null, thread: any) => {
     if (err) {
       console.error('Error creating thread:', err);
-      return res.status(500).json({ error: 'Failed to create thread', details: getErrorMessage(err) });
+      return res.status(500).json({ error: 'Failed to create thread', details: err.message });
     }
 
     res.status(200).json(thread);
@@ -285,7 +285,7 @@ app.post('/create-message', (req: Request<{}, {}, CreateMessageRequestBody>, res
   createMessage(role, content, attachments, metadata, (err: Error | null, message: any) => {
     if (err) {
       console.error('Error creating message:', err);
-      return res.status(500).json({ error: 'Failed to create message', details: getErrorMessage(err) });
+      return res.status(500).json({ error: 'Failed to create message', details: err.message });
     }
 
     res.status(200).json(message);
@@ -314,7 +314,7 @@ app.post('/create-run', (req: Request<{}, {}, CreateRunRequestBody>, res: Respon
     (err: Error | null, run: any) => {
       if (err) {
         console.error('Error creating run:', err);
-        return res.status(500).json({ error: 'Failed to create run', details: getErrorMessage(err) });
+        return res.status(500).json({ error: 'Failed to create run', details: err.message });
       }
 
       res.status(200).json(run);
@@ -326,7 +326,7 @@ app.get('/retrieve-run', (req: Request, res: Response) => {
   retrieveRun((err: Error | null, run: any) => {
     if (err) {
       console.error('Error retrieving run:', err);
-      return res.status(500).json({ error: 'Failed to retrieve run', details: getErrorMessage(err) });
+      return res.status(500).json({ error: 'Failed to retrieve run', details: err.message });
     }
 
     res.status(200).json(run);
@@ -352,7 +352,7 @@ app.get('/list-messages', (req: Request, res: Response) => {
           console.error('Error listing messages:', err);
           return res.status(500).json({
             error: 'Failed to list messages',
-            details: getErrorMessage(err),
+            details: err.message,
           });
         }
   
@@ -372,7 +372,7 @@ app.delete('/delete-thread', (req: Request<{}, {}, DeleteThreadRequestBody>, res
   deleteThread(currentThreadID, (err: Error | null, result: any) => {
     if (err) {
       console.error('Error deleting thread:', err);
-      return res.status(500).json({ error: 'Failed to delete thread', details: getErrorMessage(err) });
+      return res.status(500).json({ error: 'Failed to delete thread', details: err.message });
     }
 
     res.status(200).json({ message: 'Thread deleted successfully' });
@@ -403,7 +403,7 @@ app.get('/list-files', (req: Request, res: Response) => {
   listFiles(purpose, (err: Error | null, files: any) => {
     if (err) {
       console.error('Error listing files:', err);
-      return res.status(500).json({ error: 'Failed to list files', details: getErrorMessage(err) });
+      return res.status(500).json({ error: 'Failed to list files', details: err.message });
     }
 
     res.status(200).json(files);
@@ -420,7 +420,7 @@ app.post('/upload-json-and-create-vector-store', (req: Request<{}, {}, UploadJso
   uploadJsonAndCreateVectorStore(jsonData, vectorStoreName, (err: Error | null, vectorStore: any) => {
     if (err) {
       console.error('Error creating vector store:', err);
-      return res.status(500).json({ error: 'Failed to create vector store', details: getErrorMessage(err) });
+      return res.status(500).json({ error: 'Failed to create vector store', details: err.message });
     }
 
     res.status(200).json(vectorStore);
@@ -437,7 +437,7 @@ app.post('/add-file-to-vector-store', (req: Request<{}, {}, FileIdRequestBody>, 
   addFileToVectorStore(fileId, (err: Error | null, result: any) => {
     if (err) {
       console.error('Error adding file to vector store:', err);
-      return res.status(500).json({ error: 'Failed to add file to vector store', details: getErrorMessage(err) });
+      return res.status(500).json({ error: 'Failed to add file to vector store', details: err.message });
     }
 
     res.status(200).json(result);
@@ -454,7 +454,7 @@ app.delete('/remove-file-from-vector-store', (req: Request<{}, {}, FileIdRequest
   removeFileFromVectorStore(fileId, (err: Error | null, result: any) => {
     if (err) {
       console.error('Error removing file from vector store:', err);
-      return res.status(500).json({ error: 'Failed to remove file from vector store', details: getErrorMessage(err) });
+      return res.status(500).json({ error: 'Failed to remove file from vector store', details: err.message });
     }
 
     res.status(200).json(result);
@@ -465,7 +465,7 @@ app.delete('/delete-vector-store', (req: Request, res: Response) => {
   deleteVectorStore((err: Error | null, result: any) => {
     if (err) {
       console.error('Error deleting vector store:', err);
-      return res.status(500).json({ error: 'Failed to delete vector store', details: getErrorMessage(err) });
+      return res.status(500).json({ error: 'Failed to delete vector store', details: err.message });
     }
 
     res.status(200).json(result);
@@ -476,7 +476,7 @@ app.delete('/delete-assistant', (req: Request, res: Response) => {
   deleteAssistant((err: Error | null, result: any) => {
     if (err) {
       console.error('Error deleting assistant:', err);
-      return res.status(500).json({ error: 'Failed to delete assistant', details: getErrorMessage(err) });
+      return res.status(500).json({ error: 'Failed to delete assistant', details: err.message });
     }
 
     res.status(200).json(result);
@@ -498,7 +498,7 @@ app.get('/vector-store-files', (req: Request, res: Response) => {
     listVectorStoreFiles(limit, order, after, before, filter, (err: Error | null, files: any) => {
       if (err) {
         console.error('Error listing vector store files:', err);
-        return res.status(500).json({ error: 'Failed to list vector store files', details: getErrorMessage(err) });
+        return res.status(500).json({ error: 'Failed to list vector store files', details: err.message });
       }
   
       res.status(200).json(files); // Return the files to the client
