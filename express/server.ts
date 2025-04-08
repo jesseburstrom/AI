@@ -27,7 +27,7 @@ import {
 
 const app = express();
 app.use(cors({
-  origin: '*', // This allows all origins
+  origin: 'https://fluttersystems.com',
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
   allowedHeaders: ['Content-Type', 'Authorization']
 }));
