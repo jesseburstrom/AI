@@ -398,8 +398,8 @@ const styles = {
         overflowY: 'auto', // Add vertical scrollbar when content exceeds available space
         padding: '10px',
         borderTop: '1px solid #ccc',
-        width: '60%',
-        minWidth: '800px',
+        width: '75%',
+        minWidth: '1024px',
         margin: '0 auto', // Center horizontally
         textAlign: 'left', // Align text to the left for content
         boxSizing: 'border-box',
