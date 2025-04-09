@@ -399,6 +399,7 @@ const styles = {
         padding: '10px',
         borderTop: '1px solid #ccc',
         width: '60%',
+        minWidth: '800px',
         margin: '0 auto', // Center horizontally
         textAlign: 'left', // Align text to the left for content
         boxSizing: 'border-box',
